@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Codexxx - WhatsApp Link Generator</title>
+  <style>
+    /* Global Styles */
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f0f4f8;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+      animation: fadeIn 1s ease-in-out;
+    }
+    h1 {
+      color: #4CAF50;
+      margin-bottom: 20px;
+    }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+    button {
+    background-color: #4CAF50;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .link-container {
+      margin-top: 20px;
+      display: none;
+      animation: slideIn 0.5s ease-in-out;
+    }
+    .link-container a {
+      color: #4CAF50;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .link-container a:hover {
+      text-decoration: underline;
+    }
+    /* Animations */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+    @keyframes slideIn {
+      from {
+        transform: translateY(20px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Codexxx WhatsApp Link Generator</h1>
+    <form id="whatsappForm">
+      <input type="text" id="phoneNumber" placeholder="Enter your WhatsApp number" required>
+      <button type="submit">Generate WhatsApp Link</button>
+    </form>
+    <div class="link-container" id="linkContainer">
+      <p>Your unique code: <span id="uniqueCode"></span></p>
+      <p>Click below to start chatting on WhatsApp:</p>
+      <a id="whatsappLink" href="" target="_blank">Open WhatsApp Chat</a>
+    </div>
+  </div>
+
+  <script>
+    // Function to generate a random alphanumeric code
+    function generateRandomCode(length) {
+      const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      let result = '';
+      for (let i = 0; i < length; i++) {
+        const randomIndex = Math.floor(Math.random() * characters.length);
+        result += characters[randomIndex];
+      }
+      return result;
+    }
+
+    // Handle form submission
+    document.getElementById('whatsappForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const phoneNumber = document.getElementById('phoneNumber').value.trim();
+      if (!phoneNumber) {
+        alert('Please enter a valid phone number.');
+        return;
+      }
+
+      // Generate random code
+      const uniqueCode = generateRandomCode(8);
+      document.getElementById('uniqueCode').textContent = uniqueCode;
+
+      // Generate WhatsApp link
+      const whatsappLink = `https://wa.me/phoneNumber?text=Hello{uniqueCode}`;
+      document.getElementById('whatsappLink').href = whatsappLink;
+
+      // Show the generated link
+      document.getElementById('linkContainer').style.display = 'block';
+    });
+  </script>
